@@ -1,0 +1,34 @@
+name: Build Executable
+on: [push, workflow_dispatch]
+jobs:
+  build_exe:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure CMake
+        uses: threeal/cmake-action@v1.3.0
+      - name: Build
+        run: cmake --build build --config Release
+      - name: Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: Update
+          path: "build/Release/Update.exe"
+
+  build_linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure CMake
+        uses: threeal/cmake-action@v1.3.0
+        with:
+            options: CMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build
+      - name: Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: Update
+          path: "build/Update"
