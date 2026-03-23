@@ -5,6 +5,10 @@
     #include <process.h>
     #include <io.h>
     #include <direct.h>
+#elif __linux__
+    #include <sstream>
+    #include <unistd.h>
+    #include <vector>
 #endif
 
 #include <ctype.h>
@@ -187,7 +191,24 @@ static int l_SpawnProcess(lua_State* L)
     }
     delete pathW;
 #elif __linux__
-    // TODO Implement for linux
+    int pid = fork();
+    if (pid == 0) {
+        const char* cmdLine = lua_tostring(L, 2);
+
+        std::vector<char*> args;
+        if (cmdLine) {
+            std::istringstream argStream(cmdLine);
+            std::string arg;
+            while (std::getline(argStream, arg, ' ')) {
+                if (arg.length()) {
+                    args.push_back((char*)arg.c_str());
+                }
+            }
+        }
+
+        execvp(path, args.data());
+        exit(-1);
+    }
 #endif
     return 0;
 }
