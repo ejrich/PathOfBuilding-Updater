@@ -71,9 +71,9 @@ set(UPDATE_SOURCES
 )
 
 if (WIN32)
-    add_executable(Update WIN32 ${UPDATE_SOURCES})
+    add_executable(Updater WIN32 ${UPDATE_SOURCES})
 else ()
-    add_executable(Update ${UPDATE_SOURCES})
+    add_executable(Updater ${UPDATE_SOURCES})
 endif ()
 
 target_link_libraries(Update PRIVATE lua)
