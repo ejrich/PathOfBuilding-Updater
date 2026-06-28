@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(Update C CXX)
+project(Updater C CXX)
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
@@ -76,4 +76,4 @@ else ()
     add_executable(Updater ${UPDATE_SOURCES})
 endif ()
 
-target_link_libraries(Update PRIVATE lua)
+target_link_libraries(Updater PRIVATE lua)
